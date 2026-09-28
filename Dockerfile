@@ -32,6 +32,8 @@ FROM dev-stage AS build-stage
 USER node
 ENV GENERATE_SOURCEMAP=true
 ENV NODE_ENV=production
+ARG REACT_APP_SOURCE_CODE_URL
+ENV REACT_APP_SOURCE_CODE_URL=${REACT_APP_SOURCE_CODE_URL}
 RUN npm config set prefix /home/node/.npm-global
 RUN npm install -g npm@latest
 RUN npm run load-config

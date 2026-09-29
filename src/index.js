@@ -15,6 +15,7 @@ import ModulesManager from "./ModulesManager";
 import ModulesManagerProvider from "./ModulesManagerProvider";
 import { App, FatalError, baseApiUrl, apiHeaders } from "@openimis/fe-core";
 import getConfiguredLogo from "./helpers/logo";
+import AttributionFooter from "./AttributionFooter";
 import messages_ref from "./translations/ref.json";
 import "./index.css";
 import "./rc-cascader.css";
@@ -116,6 +117,7 @@ const AppContainer = () => {
                 logo={logo}
                 disableTextLogo={disableTextLogo}
               />
+              <AttributionFooter />
             </ModulesManagerProvider>
           </MuiPickersUtilsProvider>
         </Provider>

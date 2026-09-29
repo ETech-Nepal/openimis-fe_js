@@ -110,14 +110,17 @@ const AppContainer = () => {
         <Provider store={store(reducers, middlewares)}>
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <ModulesManagerProvider modulesManager={modulesManager}>
-              <App
-                basename={process.env.PUBLIC_URL}
-                localesManager={localesManager}
-                messages={messages_ref}
-                logo={logo}
-                disableTextLogo={disableTextLogo}
-              />
-              <AttributionFooter />
+              {/* ModulesManagerProvider renders Children.only: keep a single child */}
+              <>
+                <App
+                  basename={process.env.PUBLIC_URL}
+                  localesManager={localesManager}
+                  messages={messages_ref}
+                  logo={logo}
+                  disableTextLogo={disableTextLogo}
+                />
+                <AttributionFooter />
+              </>
             </ModulesManagerProvider>
           </MuiPickersUtilsProvider>
         </Provider>

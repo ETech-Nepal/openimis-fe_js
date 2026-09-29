@@ -100,7 +100,7 @@
         },
         {
             "name": "PolicyHolderModule",
-            "npm": "@openimis/fe-policyholder@1.9.0"
+            "npm": "@openimis/fe-policyholder@1.10.0"
         },
         {
             "name": "ContributionPlanModule",

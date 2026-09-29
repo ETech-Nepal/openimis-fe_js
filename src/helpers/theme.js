@@ -2,18 +2,18 @@ import { createTheme } from "@material-ui/core/styles";
 import { alpha } from "@material-ui/core/styles/colorManipulator";
 
 const defaultColors = {
-  primaryColor: "#006273",
-  errorColor: "#801a00",
-  whiteColor: "#fff",
-  fontColor: "#006273",
-  backgroundColor: "#dbeef0",
-  headerColor: "#b7d4d8",
-  greyColor: "grey",
-  selectedTableRowColor: "rgba(0, 0, 0, 0.08)",
-  hoveredTableRowColor: "rgba(0, 0, 0, 0.12)",
-  toggledButtonColor: "#999999",
+  primaryColor: "#1B2433", // Etech midnight (openIMIS: #006273)
+  errorColor: "#A11A1F", // denied/error red (openIMIS: #801a00)
+  whiteColor: "#FFFFFF",
+  fontColor: "#1B2433", // (openIMIS: #006273)
+  backgroundColor: "#F5F6F8", // cloud (openIMIS: #dbeef0)
+  headerColor: "#E3E6EB", // mist (openIMIS: #b7d4d8)
+  greyColor: "#5B6778", // steel (openIMIS: grey)
+  selectedTableRowColor: "rgba(27,36,51,0.06)",
+  hoveredTableRowColor: "rgba(27,36,51,0.04)",
+  toggledButtonColor: "#2F3B4E", // slate (openIMIS: #999999)
   lockedBackgroundPattern:
-    "repeating-linear-gradient(45deg, #D3D3D3 1px, #D3D3D3 1px, #fff 10px, #fff 10px)",
+    "repeating-linear-gradient(45deg, #E3E6EB 1px, #E3E6EB 1px, #FFFFFF 10px, #FFFFFF 10px)",
 };
 
 const createAppTheme = (colorOverrides = {}) => {

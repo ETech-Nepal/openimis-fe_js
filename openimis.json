@@ -76,7 +76,7 @@
         },
         {
             "name": "ClaimModule",
-            "npm": "@openimis/fe-claim@1.10.0"
+            "npm": "@openimis/fe-claim@github:ETech-Nepal/openimis-fe-claim_js#etech/26.04"
         },
         {
             "name": "ClaimBatchModule",

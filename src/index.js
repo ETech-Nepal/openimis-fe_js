@@ -16,6 +16,7 @@ import ModulesManagerProvider from "./ModulesManagerProvider";
 import { App, FatalError, baseApiUrl, apiHeaders } from "@openimis/fe-core";
 import getConfiguredLogo from "./helpers/logo";
 import AttributionFooter from "./AttributionFooter";
+import brandTitle from "./appTitle";
 import messages_ref from "./translations/ref.json";
 import "./index.css";
 import "./rc-cascader.css";
@@ -139,5 +140,7 @@ ReactDOM.render(
   </Sentry.ErrorBoundary>,
   document.getElementById("root")
 );
+
+brandTitle(messages_ref.appName);
 
 serviceWorker.register();

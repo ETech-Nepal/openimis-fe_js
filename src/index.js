@@ -19,6 +19,7 @@ import AttributionFooter from "./AttributionFooter";
 import messages_ref from "./translations/ref.json";
 import "./index.css";
 import "./rc-cascader.css";
+import "./etech-shell.css";
 
 Sentry.init({ 
   dsn: process.env.REACT_APP_SENTRY_DSN,

@@ -2,12 +2,13 @@ import { loadModules, packages } from "./modules";
 import { memoize } from "lodash";
 import pkg from "../package.json";
 import { ensureArray } from "@openimis/fe-core";
+import etechShellModule from "./EtechShell";
 
 class ModulesManager {
   constructor(cfg) {
     this.cfg = cfg;
     try {
-      this.modules = loadModules(cfg);
+      this.modules = [...loadModules(cfg), etechShellModule];
     } catch (error) {
       throw new Error(
         "Loading modules failed in ModulesManager.js. This might be caused by duplicated modules in /src/modules.js. \n ORIGINAL ERROR: " +

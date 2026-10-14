@@ -1,0 +1,405 @@
+/*
+ * Etech shell: fixes for the fe-core left drawer (fe-core menuLeft: true).
+ * fe-core styles use generated jss class names, so these rules anchor on
+ * the stable Mui* classes and the drawer's DOM structure instead.
+ */
+
+:root {
+  --etech-drawer-width: 300px; /* theme.menu.drawer.width */
+  --etech-drawer-ink: #c9d1dc;
+  --etech-drawer-muted: #8b96a8;
+  --etech-rail-width: 72px;
+  --etech-nav-width: var(--etech-drawer-width); /* current drawer width, see EtechShell.js */
+  --etech-nav-ease: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.etech-nav-collapsed {
+  --etech-nav-width: var(--etech-rail-width);
+}
+
+/* ---- Drawer header: logo on a light tile, then "Etech Insure v26.04" ---- */
+
+.MuiDrawer-paperAnchorDockedLeft > .MuiButton-root:first-child {
+  padding: 16px 16px 12px;
+  border-radius: 0;
+}
+
+.MuiDrawer-paperAnchorDockedLeft > .MuiButton-root:first-child > .MuiButton-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-start;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-transform: none;
+}
+
+/* logo tile takes the whole first row */
+.MuiDrawer-paperAnchorDockedLeft > .MuiButton-root:first-child > .MuiButton-label > div:first-child {
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+.MuiDrawer-paperAnchorDockedLeft > .MuiButton-root:first-child img {
+  display: block;
+  height: 44px;
+  max-height: none;
+  width: auto;
+  margin: 0;
+}
+
+/* version sits right after the product name instead of floating to the edge */
+.MuiDrawer-paperAnchorDockedLeft > .MuiButton-root:first-child .MuiTypography-caption {
+  margin: 0 0 0 8px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--etech-drawer-muted);
+  vertical-align: baseline;
+}
+
+.MuiDrawer-paperAnchorDockedLeft > .MuiButton-root:first-child .MuiTypography-caption::before {
+  content: "v";
+}
+
+/* ---- Drawer menu icons: readable on midnight, one column for all rows ---- */
+
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordionSummary-content > .MuiIconButton-root,
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordionSummary-expandIcon,
+.MuiDrawer-paperAnchorDockedLeft .MuiListItemIcon-root {
+  color: var(--etech-drawer-ink);
+}
+
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordionSummary-content > .MuiIconButton-root {
+  width: 48px;
+  height: 48px;
+}
+
+/* submenus: keep the opened panel dark instead of a white block in the drawer */
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordionDetails-root {
+  background-color: #151c28;
+}
+
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordionDetails-root .MuiListItemText-primary {
+  color: #e3e6eb;
+}
+
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordionDetails-root .MuiListItem-button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordionDetails-root .MuiListItem-root.Mui-selected,
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordionDetails-root .MuiListItem-root.Mui-selected:hover {
+  background-color: #2f3b4e;
+}
+
+/*
+ * Some modules contribute a top-level menu without an icon. The accordion id
+ * is the (translated) menu title, so these only match the English UI; in
+ * other languages the slot stays empty but the labels still line up.
+ */
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordionSummary-content > .MuiIconButton-root .MuiIconButton-label:empty::before {
+  font-family: "Material Icons";
+  font-size: 24px;
+  line-height: 1;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+[id="Social Protection-header"] .MuiIconButton-label:empty::before { content: "volunteer_activism"; }
+[id="Dashboards-header"] .MuiIconButton-label:empty::before { content: "dashboard"; }
+[id="Tasks Management-header"] .MuiIconButton-label:empty::before { content: "assignment_turned_in"; }
+[id="Legal and Finance-header"] .MuiIconButton-label:empty::before { content: "account_balance"; }
+[id="Grievance-header"] .MuiIconButton-label:empty::before { content: "feedback"; }
+
+/* ---- Attribution footer ---- */
+
+.etech-attribution {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1100;
+  padding: 4px 12px;
+  font-size: 11px;
+  color: #5b6778;
+  background-color: rgba(245, 246, 248, 0.9);
+  border-top-right-radius: 6px;
+}
+
+/* with the left drawer, dock the credit at the foot of the drawer */
+body:has(.MuiDrawer-paperAnchorDockedLeft) .etech-attribution {
+  z-index: 1250; /* above the drawer (1200) */
+  width: var(--etech-nav-width);
+  box-sizing: border-box;
+  padding: 10px 16px 12px;
+  line-height: 1.6;
+  color: var(--etech-drawer-muted);
+  background-color: #1b2433;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+}
+
+body:has(.MuiDrawer-paperAnchorDockedLeft) .etech-attribution a {
+  color: var(--etech-drawer-ink);
+}
+
+/* keep the last menu rows scrollable above the docked credit (only docked
+   while expanded; in the rail and its hover overlay this padding only made
+   the menu overflow, so a scrollbar popped in on hover) */
+body:not(.etech-nav-collapsed) .MuiDrawer-paperAnchorDockedLeft {
+  padding-bottom: 64px;
+}
+
+/* wheeling past the end of the menu must not scroll the page behind it */
+.MuiDrawer-paperAnchorDockedLeft {
+  overscroll-behavior: contain;
+}
+
+/* ---- Collapsible drawer (toggle in the top bar, EtechShell.js) ---- */
+
+body.etech-nav .MuiDrawer-paperAnchorDockedLeft {
+  width: var(--etech-nav-width);
+  overflow-x: hidden;
+  transition: width var(--etech-nav-ease), box-shadow var(--etech-nav-ease);
+}
+
+#root main {
+  transition: margin-left var(--etech-nav-ease);
+}
+
+body.etech-nav #root main {
+  margin-left: var(--etech-nav-width);
+}
+
+/* same icon column in both states, so icons do not jump when the drawer opens */
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordionSummary-root {
+  padding-left: 12px;
+}
+
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordionSummary-content > .MuiTypography-root,
+.MuiDrawer-paperAnchorDockedLeft > .MuiButton-root:first-child > .MuiButton-label {
+  white-space: nowrap;
+}
+
+/* menu sections are white Paper by default: a translucent highlight on a
+   section header then showed as a white block that hid its white label */
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordion-root {
+  background-color: #1b2433;
+}
+
+/* section holding the current page: slate row, Etech red marker and icon */
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordion-root:has(.Mui-selected) > .MuiAccordionSummary-root {
+  background-color: #2f3b4e;
+  box-shadow: inset 3px 0 0 #e5484d;
+}
+
+.MuiDrawer-paperAnchorDockedLeft .MuiAccordion-root:has(.Mui-selected) .MuiAccordionSummary-content > .MuiIconButton-root,
+.MuiDrawer-paperAnchorDockedLeft .MuiListItem-root.Mui-selected .MuiListItemIcon-root {
+  color: #e5484d;
+}
+
+/* collapsed: hovering (or tabbing into) the rail opens it over the page */
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:hover,
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:has(:focus-visible) {
+  width: var(--etech-drawer-width);
+  box-shadow: 8px 0 24px rgba(10, 15, 25, 0.35);
+  transition-delay: 150ms;
+}
+
+/* thin dark scrollbar instead of the platform's light one on the midnight drawer */
+.MuiDrawer-paperAnchorDockedLeft {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.MuiDrawer-paperAnchorDockedLeft::-webkit-scrollbar {
+  width: 6px;
+}
+
+.MuiDrawer-paperAnchorDockedLeft::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.MuiDrawer-paperAnchorDockedLeft::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* rail: icons only */
+/* no visible scrollbar in 72px (it pushed the icons off centre); the wheel still scrolls */
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) {
+  scrollbar-width: none;
+}
+
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible))::-webkit-scrollbar {
+  display: none;
+}
+
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) .MuiAccordionSummary-content > .MuiTypography-root,
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) .MuiAccordionSummary-expandIcon,
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) .MuiAccordion-root > :not(.MuiAccordionSummary-root),
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) > .MuiButton-root:first-child .MuiTypography-caption {
+  display: none;
+}
+
+/* rail header: product name hidden, logo cropped to its mark */
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) > .MuiButton-root:first-child {
+  padding: 16px 12px 12px;
+}
+
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) > .MuiButton-root:first-child > .MuiButton-label {
+  font-size: 0;
+}
+
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) > .MuiButton-root:first-child > .MuiButton-label > div:first-child {
+  flex-basis: 48px;
+  margin-bottom: 0;
+  padding: 6px;
+}
+
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) > .MuiButton-root:first-child img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  object-position: left center;
+}
+
+/* collapsed: the credit leaves the rail and sits at the page's bottom-left */
+body.etech-nav-collapsed .etech-attribution {
+  left: var(--etech-rail-width);
+  z-index: 1100;
+  width: auto;
+  padding: 4px 12px;
+  line-height: normal;
+  color: #5b6778;
+  background-color: rgba(245, 246, 248, 0.9);
+  border-top: 0;
+  border-top-right-radius: 6px;
+}
+
+body.etech-nav-collapsed .etech-attribution a {
+  color: #1b2433;
+}
+
+/* ---- Top bar: light, starts after the drawer, breadcrumb + user ---- */
+
+body.etech-nav #root .MuiAppBar-positionFixed {
+  padding-left: var(--etech-nav-width);
+  color: #1b2433;
+  background-color: #ffffff;
+  box-shadow: 0 1px 0 #e3e6eb;
+  transition: padding-left var(--etech-nav-ease);
+}
+
+body.etech-nav #root .MuiAppBar-positionFixed .MuiToolbar-root {
+  gap: 8px;
+  padding-left: 8px;
+}
+
+body.etech-nav #root .MuiAppBar-positionFixed .MuiIconButton-root {
+  margin: 0;
+  color: #5b6778;
+}
+
+body.etech-nav #root .MuiAppBar-positionFixed .MuiIconButton-root:hover {
+  color: #1b2433;
+  background-color: rgba(27, 36, 51, 0.06);
+}
+
+/* insuree enquiry (fe-insuree core.AppBar contribution): a visible field on white */
+body.etech-nav #root .MuiAppBar-positionFixed .MuiInputBase-root {
+  color: #1b2433;
+  background-color: #f5f6f8;
+  border: 1px solid #e3e6eb;
+  border-radius: 8px;
+}
+
+body.etech-nav #root .MuiAppBar-positionFixed .MuiInputBase-root.Mui-focused {
+  background-color: #ffffff;
+  border-color: #5b6778;
+}
+
+body.etech-nav #root .MuiAppBar-positionFixed .MuiInputBase-input::placeholder {
+  color: #5b6778;
+  opacity: 1;
+}
+
+.etech-topbar-start {
+  order: -1; /* before the toolbar's spacer, so it sits on the left */
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.etech-topbar-crumbs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.etech-topbar-section {
+  color: #5b6778;
+}
+
+.etech-topbar-sep {
+  color: #8b96a8;
+}
+
+.etech-topbar-page {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  color: #1b2433;
+}
+
+.etech-topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 8px;
+  padding-left: 16px;
+  border-left: 1px solid #e3e6eb;
+}
+
+.etech-topbar-avatar.MuiAvatar-root {
+  width: 34px;
+  height: 34px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #1b2433;
+}
+
+.etech-topbar-user-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.etech-topbar-user-name {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.etech-topbar-user-login {
+  font-size: 12px;
+  color: #5b6778;
+}
+
+@media (max-width: 959px) {
+  .etech-topbar-section,
+  .etech-topbar-sep,
+  .etech-topbar-user-text {
+    display: none;
+  }
+}

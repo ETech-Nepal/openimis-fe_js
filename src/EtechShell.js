@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Avatar, IconButton, Tooltip } from "@material-ui/core";
 import { Menu as MenuIcon, MenuOpen as MenuOpenIcon, ChevronRight } from "@material-ui/icons";
 import { useLocation, useModulesManager } from "@openimis/fe-core";
+import { claimsDashboardContributions } from "./EtechClaimsDashboard";
 
 // Top bar contribution for the fe-core left drawer layout (menuLeft: true):
 // drawer collapse toggle + breadcrumb on the left, signed-in user on the right.
@@ -147,6 +148,7 @@ const EtechTopBar = () => {
 // registered as a local module in ModulesManager
 const etechShellModule = {
   "core.AppBar": [EtechTopBar],
+  ...claimsDashboardContributions,
 };
 
 export default etechShellModule;

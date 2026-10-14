@@ -230,7 +230,21 @@ body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:has(:focus-visible) {
   background: transparent;
 }
 
-/* rail: icons only */
+/*
+ * Rail (collapsed): the menu keeps exactly the layout of the open drawer and is
+ * only clipped to 72px, with its text faded out. Opening it (hover, focus, the
+ * toggle) is then a pure reveal: no row moves, no label wraps. Hiding rows in
+ * the rail made everything shift 56px on hover, so the entry under the
+ * pointer changed while the drawer opened and closed.
+ */
+
+/* fixed-width content: rows never reflow while the drawer width animates */
+body.etech-nav .MuiDrawer-paperAnchorDockedLeft > * {
+  flex-shrink: 0;
+  width: var(--etech-drawer-width);
+  box-sizing: border-box;
+}
+
 /* no visible scrollbar in 72px (it pushed the icons off centre); the wheel still scrolls */
 body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) {
   scrollbar-width: none;
@@ -240,33 +254,51 @@ body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:
   display: none;
 }
 
+/* text fades in once the drawer has started to open, and out at once on close */
+body.etech-nav .MuiDrawer-paperAnchorDockedLeft .MuiAccordionSummary-content > .MuiTypography-root,
+body.etech-nav .MuiDrawer-paperAnchorDockedLeft .MuiAccordionSummary-expandIcon,
+body.etech-nav .MuiDrawer-paperAnchorDockedLeft .MuiAccordionDetails-root .MuiListItemText-root {
+  transition: opacity 150ms ease 200ms;
+}
+
+body.etech-nav .MuiDrawer-paperAnchorDockedLeft > .MuiButton-root:first-child > .MuiButton-label,
+body.etech-nav .MuiDrawer-paperAnchorDockedLeft > .MuiButton-root:first-child .MuiTypography-caption {
+  transition: color 150ms ease 200ms;
+}
+
 body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) .MuiAccordionSummary-content > .MuiTypography-root,
 body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) .MuiAccordionSummary-expandIcon,
-body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) .MuiAccordion-root > :not(.MuiAccordionSummary-root),
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) .MuiAccordionDetails-root .MuiListItemText-root {
+  opacity: 0;
+  transition-duration: 80ms;
+  transition-delay: 0ms;
+}
+
+/* rail header: product name invisible but still taking its row */
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) > .MuiButton-root:first-child > .MuiButton-label,
 body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) > .MuiButton-root:first-child .MuiTypography-caption {
-  display: none;
+  color: transparent;
+  transition-duration: 80ms;
+  transition-delay: 0ms;
 }
 
-/* rail header: product name hidden, logo cropped to its mark */
-body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) > .MuiButton-root:first-child {
-  padding: 16px 12px 12px;
-}
-
-body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) > .MuiButton-root:first-child > .MuiButton-label {
-  font-size: 0;
+/* logo tile: always a full row (so the header keeps its height); the rail clips it
+   to its left 48px, where the left-aligned logo shows its mark */
+body.etech-nav .MuiDrawer-paperAnchorDockedLeft > .MuiButton-root:first-child > .MuiButton-label > div:first-child {
+  justify-content: flex-start;
+  overflow: hidden;
+  clip-path: inset(0 0 0 0 round 8px);
+  transition: clip-path var(--etech-nav-ease), padding var(--etech-nav-ease);
 }
 
 body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) > .MuiButton-root:first-child > .MuiButton-label > div:first-child {
-  flex-basis: 48px;
-  margin-bottom: 0;
-  padding: 6px;
+  padding-left: 0;
+  clip-path: inset(0 calc(100% - 48px) 0 0 round 8px);
 }
 
-body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:not(:hover):not(:has(:focus-visible)) > .MuiButton-root:first-child img {
-  width: 36px;
-  height: 36px;
-  object-fit: cover;
-  object-position: left center;
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:hover > .MuiButton-root:first-child > .MuiButton-label > div:first-child,
+body.etech-nav-collapsed .MuiDrawer-paperAnchorDockedLeft:has(:focus-visible) > .MuiButton-root:first-child > .MuiButton-label > div:first-child {
+  transition-delay: 150ms;
 }
 
 /* collapsed: the credit leaves the rail and sits at the page's bottom-left */
